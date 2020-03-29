@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import classNames from 'classnames';
+import { Text } from 'react-native'
 
 class Square extends React.Component {  
   render() {
@@ -104,15 +105,29 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    let styles = {
+      step: {
+        fontWeight: "bold",
+      }
+    }
 
     const moves = history.map((step, move) => {
       const clic_location = this.convertClicToLocation(current.clic[move-1]);
-      const desc = move ? 'Revenir au tour n°' + move + ' à la ligne ' + clic_location[0] + ' / colonne ' + clic_location[1] : 'Revenir au début de la partie';
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-        </li>
-      );
+      if(move === 0){
+        return (
+          <li key={move}>
+            <button onClick={() => this.jumpTo(move)}><Text>Revenir au début de la partie</Text></button>
+          </li>
+        );
+      }
+      else{
+        return (
+          <li key={move}>
+            <button onClick={() => this.jumpTo(move)}><Text>Revenir au tour n°<Text style={styles.step}>{move}</Text> à la ligne {clic_location[0]} / colonne {clic_location[1]}</Text></button>
+          </li>
+        );
+      }
+      
     });
     let status;
     if (winner) {
