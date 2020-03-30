@@ -4,9 +4,9 @@ import './index.css';
 import classNames from 'classnames';
 import { Text } from 'react-native'
 
-class Square extends React.Component {  
+class Square extends React.Component {
   render() {
-    let btnClass=null;
+    let btnClass = null;
     btnClass = this.props.winner ? classNames('square', 'winner_class') : classNames('square');
     return (
       <button winner={this.props.winner}
@@ -62,7 +62,7 @@ class Game extends React.Component {
     const current = history[history.length - 1];
     const winner_location = current.winner_location;
     for (let i = 0; i < winner.length; i++) {
-      winner_location[winner[i]]=true;
+      winner_location[winner[i]] = true;
     }
   }
   handleClick(i) {
@@ -76,7 +76,7 @@ class Game extends React.Component {
       return;
     }
     clic.push(i);
-    squares[i]= this.state.xIsNext ? 'X' : 'O';
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
     winner_location[i] = false;
     this.setState({
       history: history.concat([{
@@ -97,8 +97,8 @@ class Game extends React.Component {
   // This function aims to have the location of the clic with row/column from the array position of the clic
   convertClicToLocation(clic_position) {
     let location = [];
-    location.push(Math.trunc(clic_position/3)+1);
-    location.push(clic_position%3+1);
+    location.push(Math.trunc(clic_position / 3) + 1);
+    location.push(clic_position % 3 + 1);
     return location;
   }
   render() {
@@ -112,22 +112,22 @@ class Game extends React.Component {
     }
 
     const moves = history.map((step, move) => {
-      const clic_location = this.convertClicToLocation(current.clic[move-1]);
-      if(move === 0){
+      const clic_location = this.convertClicToLocation(current.clic[move - 1]);
+      if (move === 0) {
         return (
           <li key={move}>
             <button onClick={() => this.jumpTo(move)}><Text>Revenir au début de la partie</Text></button>
           </li>
         );
       }
-      else{
+      else {
         return (
           <li key={move}>
             <button onClick={() => this.jumpTo(move)}><Text>Revenir au tour n°<Text style={styles.step}>{move}</Text> à la ligne {clic_location[0]} / colonne {clic_location[1]}</Text></button>
           </li>
         );
       }
-      
+
     });
     let status;
     if (winner) {
